@@ -82,6 +82,12 @@ export default function Members(){
     </Link>
   );
 
+  const viewButtonTemplate = (rowData) => (
+    <Link to={`/user-contributions/${rowData.id}`} className="btn-add">
+      View
+    </Link>
+  );
+
   const deleteButtonTemplate = (rowData) => (
     <Button
       label="Delete"
@@ -104,6 +110,7 @@ export default function Members(){
         <Column field="name" header="Name" filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
         <Column field="email" header="Email" filter filterPlaceholder="Search by email" style={{ minWidth: '12rem' }} />
         <Column field="created_at" header="Date Created" filter filterPlaceholder="Search by date" style={{ minWidth: '12rem' }} />
+        <Column body={viewButtonTemplate} style={{ textAlign: 'center', width: '8rem' }} />
         <Column body={editButtonTemplate} style={{ textAlign: 'center', width: '8rem' }} />
         <Column body={deleteButtonTemplate} style={{ textAlign: 'center', width: '8rem' }} />
       </DataTable>

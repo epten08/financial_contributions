@@ -31,6 +31,15 @@ input {
   font-size: 14px;
   transition: all 0.3s;
 }
+.custom-dropdown {
+  border: 1px solid #ccc;
+  borderRadius: 5px;
+  padding: 5px;
+}
+
+.custom-dropdown-list {
+  background-color: #7d27f5;
+}
 
 input:focus {
   border-color: #5b08a7;
