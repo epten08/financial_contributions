@@ -7,6 +7,8 @@ import DefaultLayout from "./components/DefaultLayout.jsx";
 import GuestLayout from "./components/GuestLayout.jsx";
 import Contributions from "./views/Contributions.jsx";
 import UserForm from "./views/UserForm.jsx";
+import ContributionForm from "./views/ContributionForm.jsx";
+import IndividualContributions from "./views/IndividualContributions.jsx";
 
 const router = createBrowserRouter( [
   {
@@ -30,9 +32,17 @@ const router = createBrowserRouter( [
         element: <UserForm key="userUpdate" />
       },
       {
+        path: '/user-contributions/:id',
+        element: <IndividualContributions key="userContributions" />
+      },
+      {
         path: '/contributions',
         element: <Contributions />
       },
+      {
+        path: '/contributions/new',
+        element: <ContributionForm key="contributionCreate" />
+      }
     ]
   },
   {
