@@ -2,12 +2,32 @@ import {useEffect, useState} from "react";
 import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
 import {useStateContext} from "../contexts/ContextProvider.jsx";
+//datatable imports
+import { classNames } from 'primereact/utils';
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
+import { MultiSelect } from 'primereact/multiselect';
+import { Tag } from 'primereact/tag';
+import { TriStateCheckbox } from 'primereact/tristatecheckbox';
+import { Button } from 'primereact/button';
 
 export default function Members(){
 
   const [users,setUsers] = useState([]);
   const [loading,setLoading] = useState(false)
   const {setNotification} = useStateContext()
+
+  //datatable variables
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    email: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    created_at: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   useEffect(() => {
     getUsers()
@@ -33,51 +53,61 @@ export default function Members(){
         setLoading(false)
       })
   }
+
+  //data table methods
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  }
+
+  const renderHeader = () => {
+    return (
+      <div className="flex justify-content-end">
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+                </span>
+      </div>
+    );
+  }
+
+  const editButtonTemplate = (rowData) => (
+    <Link to={`/users/${rowData.id}`} className="btn-edit">
+      Edit
+    </Link>
+  );
+
+  const deleteButtonTemplate = (rowData) => (
+    <Button
+      label="Delete"
+      icon="pi pi-trash"
+      className="btn-delete"
+    />
+  );
+
+  const header = renderHeader();
+
+
   return (
     <div>
-      <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
-        <h1>Users</h1>
-        <Link className="btn-add" to="/users/new">Add new</Link>
-      </div>
-      <div className="card animated fadeInDown">
-        <table>
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Create Date</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          {loading &&
-            <tbody>
-            <tr>
-              <td colSpan="5" className="text-center">
-                Loading...
-              </td>
-            </tr>
-            </tbody>
-          }
-          {!loading &&
-            <tbody>
-            {users.map(u => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>{u.created_at}</td>
-                <td>
-                  <Link className="btn-edit" to={'/users/' + u.id}>Edit</Link>
-                  &nbsp;
-                  <button className="btn-delete" onClick={ev => onDeleteClick(u)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-            </tbody>
-          }
-        </table>
-      </div>
+    <div style={{display: 'flex', justifyContent: "space-between", alignItems: "center"}}>
+    <h1>Members</h1>
+      <Link className="btn-add" to="/users/new">Add new</Link>
+    </div>
+    <div className="card animated fadeInDown">
+      <DataTable value={users} dataKey="id" filterDisplay="row" filters={filters} globalFilterFields={['name','email']} header={header} loading={loading} emptyMessage="No members found.">
+        <Column field="name" header="Name" filter filterPlaceholder="Search by name" style={{ minWidth: '12rem' }} />
+        <Column field="email" header="Email" filter filterPlaceholder="Search by email" style={{ minWidth: '12rem' }} />
+        <Column field="created_at" header="Date Created" filter filterPlaceholder="Search by date" style={{ minWidth: '12rem' }} />
+        <Column body={editButtonTemplate} style={{ textAlign: 'center', width: '8rem' }} />
+        <Column body={deleteButtonTemplate} style={{ textAlign: 'center', width: '8rem' }} />
+      </DataTable>
+    </div>
     </div>
   )
 }
