@@ -7,7 +7,7 @@ import axiosClient from "../axios-client.js";
 
 export default function DefaultLayout(){
 
-  const {user,token,setToken,setUser} = useStateContext()
+  const {user,token,setToken,setUser,notification} = useStateContext()
 
   if (!token) {
     return <Navigate to="login" />
@@ -31,7 +31,7 @@ export default function DefaultLayout(){
   return (
     <div id="defaultLayout">
       <aside>
-        <Link to="/members">Members</Link>
+        <Link to="/users">Members</Link>
         <Link to="/contributions">Contributions</Link>
       </aside>
       <div className="content">
@@ -40,13 +40,18 @@ export default function DefaultLayout(){
             Header
           </div>
           <div>
-            {user.name}
+            {user.name} &nbsp; &nbsp;
             <a href="#" onClick={onLogout} className="btn-logout">Logout</a>
           </div>
         </header>
         <main>
           <Outlet />
         </main>
+        {notification &&
+          <div className="notification">
+            {notification}
+          </div>
+        }
       </div>
     </div>
   )
