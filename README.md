@@ -38,3 +38,13 @@ Make sure you have environment setup properly. You will need PHP8.2, composer an
 9. Adjust the `baseURL` parameter in `web-app/src/axios-client`
 10. Run `npm install`
 11. Run `npm run dev` to start vite server for React
+
+# Screenshots
+![Screenshot 2024-01-23 154629](https://github.com/epten08/financial_contributions/assets/29504158/e974e6cb-fac8-43b8-b8bc-be5ba3190ff5)
+
+
+![Screenshot 2024-01-23 154651](https://github.com/epten08/financial_contributions/assets/29504158/1a0fd9cc-5746-43b2-a9e1-f7eea4bac51a)
+
+
+![Screenshot 2024-01-23 154733](https://github.com/epten08/financial_contributions/assets/29504158/dbd1fa56-9f9b-45ee-8f98-3c26024fa97c)
+
