@@ -21,7 +21,7 @@ https://github.com/epten08/financial_contributions_mobile
 
 ## Demo
 
-https://financials-task.netlify.app/login
+https://financials-task.netlify.app
 
 ## Installation
 
