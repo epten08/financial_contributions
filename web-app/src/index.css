@@ -33,7 +33,7 @@ input {
 }
 .custom-dropdown {
   border: 1px solid #ccc;
-  borderRadius: 5px;
+  border-radius: 5px;
   padding: 5px;
 }
 

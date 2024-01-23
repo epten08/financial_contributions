@@ -68,16 +68,19 @@ export default function ContributionForm(){
         }
         {!loading && (
           <form onSubmit={onSubmit}>
+            <div className="card flex justify-content-center">
             <Dropdown options={users.map(user => ({
               label: user.name,  // Displayed in the dropdown
-              value: user.id     // Value when selected
+              value: user.id,     // Value when selected
+
             }))}
                       placeholder="Select a user"
                       value={contribution.user_id}
-                      style={{ width: '100%', marginBottom: '10px' }}
-                      className="custom-dropdown"
-                      dropdownclassname="custom-dropdown-list"
-                      onChange={(e) => setContribution({...contribution, user_id: e.value})}/>
+                      style={{ width: '100%', marginBottom: '10px' ,backgroundColor: "lightblue"}}
+                      onChange={(e) => setContribution({...contribution, user_id: e.value})}
+                      className="w-full md:w-14rem bg-indigo-500"
+                      />
+                      </div>
             <input value={contribution.period}
                    onChange={ev => setContribution({...contribution, period: ev.target.value})} placeholder="Period"/>
             <input value={contribution.type}
